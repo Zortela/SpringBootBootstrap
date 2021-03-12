@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Take users</title>
+</head>
+<body>
+<div>
+    <th:block th:each="List : ${ListUsers}">
+        <a th:text="${List.toString()}">user</a>
+        <a th:each="role:${List.getRoles()}" th:text="${role.getName()}">VALUE></a>
+        <a th:href="@{/admin/users/{id}/edit(id=${List.getId()})}">Edit</a>
+        <form th:method="DELETE" th:action="@{/admin/users/{id}(id=${List.getId()})}">
+            <input type="submit" value="Delete">
+        </form>
+        <br/>
+    </th:block>
+</div>
+
+<br/>
+<hr/>
+
+<a href="/admin/users/new">Create new user</a>
+<br/>
+<br/>
+<form th:method="POST" th:action="@{/logout}">
+    <input type="submit" value="Logout"/>
+</form>
+</body>
+</html>
