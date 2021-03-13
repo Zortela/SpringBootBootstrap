@@ -3,10 +3,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Take users</title>
 </head>
 <body>
-<div>
+<div class="container">
     <th:block th:each="List : ${ListUsers}">
         <a th:text="${List.toString()}">user</a>
         <a th:each="role:${List.getRoles()}" th:text="${role.getName().substring(5)}">VALUE></a>
@@ -17,10 +16,8 @@
         <br/>
     </th:block>
 </div>
-
 <br/>
 <hr/>
-
 <a href="/admin/users/new">Create new user</a>
 <br/>
 <br/>
