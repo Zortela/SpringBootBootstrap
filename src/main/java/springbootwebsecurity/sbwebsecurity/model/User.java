@@ -96,7 +96,7 @@ public class User implements UserDetails {
         for (Role roles:getRoles()) {
             result = result + roles.getName();
         }
-        return "Username: " + getUsername() + " with roles: "+ result;
+        return getUsername() + " with roles: "+ result;
     }
 
     @Override

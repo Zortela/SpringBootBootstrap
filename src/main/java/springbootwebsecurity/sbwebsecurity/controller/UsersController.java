@@ -26,7 +26,9 @@ public class UsersController {
     }
 
     @GetMapping()
-    public String getAllUsers(Model model) {
+    public String getAllUsers(@ModelAttribute("newUser") User user, Model model) {
+        List<Role> allRoles = userService.getRoles();
+        model.addAttribute("allRoles", allRoles);
         model.addAttribute("user", userDetailsServiceImp.getUser());
         model.addAttribute("ListUsers", userService.getAllUsers());
         return "admin/getAllUsers";
@@ -55,7 +57,7 @@ public class UsersController {
 
 
     @PostMapping()
-    public String create(@ModelAttribute("user") User user) {
+    public String create(@ModelAttribute("newUser") User user) {
         userService.add(user);
         return "redirect:/admin/users";
     }

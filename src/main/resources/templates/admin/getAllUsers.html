@@ -13,93 +13,137 @@
 </head>
 <body>
 <div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color:#ffbbbb">
         <div class="container-fluid">
-            <a th:text="${user.getTitle()}"></a>
+            <span style="font-size: large; ">
+                <a th:text="${user.getTitle()}"></a>
+            </span>
+            <span style="font-size: large; ">
             <a href="/logout">Logout</a>
+            </span>
         </div>
     </nav>
 </div>
 
-<div class="container" style="background-color:#f5f4f4">
-    <div class="container overflow-hidden">
-        <div class="row gx-5">
-            <b><span style="font-size: xx-large; ">Admin panel</span></b>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2">
+            <a>Hello</a>
         </div>
-    </div>
-    <p></p>
-    <div class="container overflow-hidden">
-        <div class="row gx-5">
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/admin/users">User table</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/admin/users/new">New User</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <table class="table">
-        <table class="table caption-top">
-            <caption>
-                <div class="container overflow-hidden">
-                    <b>List of users</b>
-                </div>
-            </caption>
-            <table class="table table-striped">
-                <thead class="table-light">
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Surname</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">List Roles</th>
-                    <th scope="col">Edit</th>
-                    <th scope="col">Delete</th>
-                </tr>
-                </thead>
-                <tbody>
-                <div class="container overflow-hidden">
-                    <div class="row gx-5">
-                        <th:block th:each="List : ${ListUsers}">
+
+        <div class="col-10" style="background-color:#f5f4f4">
+            <div class="container overflow-hidden">
+                <b><span style="font-size: xx-large; ">Admin panel</span></b>
+                <p></p>
+
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" aria-current="page" href="#main">User table</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#new">New User</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="main">
+                        <caption>
+                            <div class="container overflow-hidden">
+                                <b><span style="font-size: x-large; ">List of users</span></b>
+                            </div>
+                        </caption>
+
+                        <table class="table table-bordered table-striped caption-top">
+                            <thead class="table-light">
                             <tr>
-                                <td th:text="${List.getId()}"></td>
-                                <td th:text="${List.getUsername()}"></td>
-                                <td th:text="${List.getName()}"></td>
-                                <td th:text="${List.getSurname()}"></td>
-                                <td th:text="${List.getAge}"></td>
-                                <td scope="row">
-                                    <th:block th:each="role:${List.getRoles()}" th:text="${role.getName()}"></th:block>
-                                </td>
-                                <td>
-                                    <div class="container overflow-hidden">
-                                        <div class="row gx-5">
-                                            <form th:action="@{/admin/users/{id}/edit(id=${List.getId()})}">
-                                                <input type="submit" value="Edit"></input>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="container overflow-hidden">
-                                        <div class="row gx-5">
-                                            <form th:method="DELETE"
-                                                  th:action="@{/admin/users/{id}(id=${List.getId()})}">
+                                <th scope="col">Id</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Surname</th>
+                                <th scope="col">Age</th>
+                                <th scope="col">List Roles</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <div class="container overflow-hidden">
+                                <th:block th:each="List : ${ListUsers}">
+                                    <tr>
+
+                                        <td th:text="${List.getId()}"></td>
+                                        <td th:text="${List.getUsername()}"></td>
+                                        <td th:text="${List.getName()}"></td>
+                                        <td th:text="${List.getSurname()}"></td>
+                                        <td th:text="${List.getAge}"></td>
+                                        <td scope="row">
+                                            <th:block th:each="role:${List.getRoles()}"
+                                                      th:text="${role.getName()}"></th:block>
+                                        </td>
+
+                                        <td>
+                                            <a class="btn btn-dark active" role="button"
+                                               aria-pressed="true"
+                                               th:href="@{/admin/users/{id}/edit(id=${List.getId()})}">Edit</a>
+                                        </td>
+
+                                        <td>
+                                            <form class="btn btn-dark active" th:method="DELETE"
+                                                  th:action="@{/admin/users/{id}(id=${user.getId()})}">
                                                 <input type="submit" value="Delete">
                                             </form>
+                                        </td>
+                                    </tr>
+                                </th:block>
+                            </div>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div class="tab-pane fade" id="new">
+                        <div class="container overflow-hidden">
+                            <caption>
+                                <b><span style="font-size: x-large; ">Add new user</span></b>
+                            </caption>
+
+                            <form th:method="POST" th:action="@{/admin/users}" th:object="${newUser}">
+                                <label for="username">Enter username: </label>
+                                <input type="text" th:field="*{username}" id="username"/>
+                                <br/>
+                                <label for="password">Enter password: </label>
+                                <input type="password" th:field="*{password}" id="password"/>
+                                <br/>
+                                <label for="name">Enter name: </label>
+                                <input type="text" th:field="*{name}" id="name"/>
+                                <br/>
+                                <label for="surname">Enter surname: </label>
+                                <input type="text" th:field="*{surname}" id="surname"/>
+                                <br/>
+                                <label for="age">Enter age: </label>
+                                <input type="number" th:field="*{age}" id="age"/>
+                                <br/>
+                                <label>Roles:</label>
+
+                                <ul>
+                                    <li th:each="role: ${allRoles}">
+                                        <div>
+                                            <input type="checkbox" th:field="*{roles}" th:value="${role.id}">
+                                            <label th:text="${role.name}"></label>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </th:block>
+                                    </li>
+                                </ul>
+
+                                <input type="submit" value="Add"/>
+
+                            </form>
+                        </div>
                     </div>
                 </div>
-                </tbody>
-            </table>
-        </table>
-    </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
