@@ -91,6 +91,14 @@ public class User implements UserDetails {
         return "Id = " + getId() + " Username = " + getUsername() + " Name = " + getName() + " Surname = " + getSurname() + " Age = " + getAge() + " List Roles: ";
     }
 
+    public String getTitle() {
+        String result = "";
+        for (Role roles:getRoles()) {
+            result = result + roles.getName();
+        }
+        return "Username: " + getUsername() + " with roles: "+ result;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();

@@ -15,7 +15,7 @@
 
 <ul>
     <li th:each="role:${user.getRoles()}">
-        <span th:text="${role.getName().substring(5)}">VALUE</span>
+        <span th:text="${role.getName()}">VALUE</span>
     </li>
 </ul>
 

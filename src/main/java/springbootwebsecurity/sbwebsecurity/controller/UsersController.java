@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import springbootwebsecurity.sbwebsecurity.model.Role;
 import springbootwebsecurity.sbwebsecurity.model.User;
+import springbootwebsecurity.sbwebsecurity.security.UserDetailsServiceImp;
 import springbootwebsecurity.sbwebsecurity.service.UserService;
 
 import java.util.List;
@@ -15,16 +16,18 @@ import java.util.List;
 @RequestMapping("/admin/users")
 public class UsersController {
 
+    private final UserDetailsServiceImp userDetailsServiceImp;
     private final UserService userService;
 
     @Autowired
-    public UsersController(UserService userService) {
+    public UsersController(UserDetailsServiceImp userDetailsServiceImp, UserService userService) {
+        this.userDetailsServiceImp = userDetailsServiceImp;
         this.userService = userService;
     }
 
-
     @GetMapping()
     public String getAllUsers(Model model) {
+        model.addAttribute("user", userDetailsServiceImp.getUser());
         model.addAttribute("ListUsers", userService.getAllUsers());
         return "admin/getAllUsers";
     }

@@ -6,7 +6,6 @@
     <title>Title</title>
 </head>
 <body>
-<p th:text="${user.getId()}">VALUE</p>
 <p th:text="${user.getUsername()}">VALUE</p>
 <p th:text="${user.getPassword()}">VALUE</p>
 <p th:text="${user.getName()}">VALUE</p>
@@ -15,7 +14,7 @@
 
 <ul>
     <li th:each="role:${user.getRoles()}">
-        <span th:text="${role.getName().substring(5)}">VALUE</span>
+        <span th:text="${role.getName()}">VALUE</span>
     </li>
 </ul>
 

@@ -29,7 +29,7 @@
         <li th:each="role: ${allRoles}">
             <div>
                 <input type="checkbox" th:field="*{roles}" th:value="${role.id}">
-                <label th:text="${role.name.substring(5)}"></label>
+                <label th:text="${role.name}"></label>
             </div>
         </li>
     </ul>

@@ -3,26 +3,114 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Admin panel</title>
 </head>
 <body>
-<div class="container">
-    <th:block th:each="List : ${ListUsers}">
-        <a th:text="${List.toString()}">user</a>
-        <a th:each="role:${List.getRoles()}" th:text="${role.getName().substring(5)}">VALUE></a>
-        <a th:href="@{/admin/users/{id}/edit(id=${List.getId()})}">Edit</a>
-        <form th:method="DELETE" th:action="@{/admin/users/{id}(id=${List.getId()})}">
-            <input type="submit" value="Delete">
-        </form>
-        <br/>
-    </th:block>
+<div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a th:text="${user.getTitle()}"></a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
 </div>
-<br/>
-<hr/>
-<a href="/admin/users/new">Create new user</a>
-<br/>
-<br/>
-<form th:method="POST" th:action="@{/logout}">
-    <input type="submit" value="Logout"/>
-</form>
+
+<div class="container" style="background-color:#f5f4f4">
+    <div class="container overflow-hidden">
+        <div class="row gx-5">
+            <b><span style="font-size: xx-large; ">Admin panel</span></b>
+        </div>
+    </div>
+    <p></p>
+    <div class="container overflow-hidden">
+        <div class="row gx-5">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/admin/users">User table</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/users/new">New User</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <table class="table">
+        <table class="table caption-top">
+            <caption>
+                <div class="container overflow-hidden">
+                    <b>List of users</b>
+                </div>
+            </caption>
+            <table class="table table-striped">
+                <thead class="table-light">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Surname</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">List Roles</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <div class="container overflow-hidden">
+                    <div class="row gx-5">
+                        <th:block th:each="List : ${ListUsers}">
+                            <tr>
+                                <td th:text="${List.getId()}"></td>
+                                <td th:text="${List.getUsername()}"></td>
+                                <td th:text="${List.getName()}"></td>
+                                <td th:text="${List.getSurname()}"></td>
+                                <td th:text="${List.getAge}"></td>
+                                <td scope="row">
+                                    <th:block th:each="role:${List.getRoles()}" th:text="${role.getName()}"></th:block>
+                                </td>
+                                <td>
+                                    <div class="container overflow-hidden">
+                                        <div class="row gx-5">
+                                            <form th:action="@{/admin/users/{id}/edit(id=${List.getId()})}">
+                                                <input type="submit" value="Edit"></input>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="container overflow-hidden">
+                                        <div class="row gx-5">
+                                            <form th:method="DELETE"
+                                                  th:action="@{/admin/users/{id}(id=${List.getId()})}">
+                                                <input type="submit" value="Delete">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </th:block>
+                    </div>
+                </div>
+                </tbody>
+            </table>
+        </table>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
 </body>
 </html>
