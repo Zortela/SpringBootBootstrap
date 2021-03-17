@@ -26,11 +26,17 @@ public class UsersController {
     }
 
     @GetMapping()
-    public String getAllUsers(@ModelAttribute("newUser") User user, Model model) {
+    public String getAllUsers(@ModelAttribute("newUser") User user,
+                              @ModelAttribute("updateUser") User updateUser,
+                              @ModelAttribute("id") Long id,
+                              Model model) {
         List<Role> allRoles = userService.getRoles();
+
         model.addAttribute("allRoles", allRoles);
         model.addAttribute("user", userDetailsServiceImp.getUser());
         model.addAttribute("ListUsers", userService.getAllUsers());
+
+        model.addAttribute("updateUser", userService.getUser(id));
         return "admin/getAllUsers";
     }
 
@@ -62,8 +68,8 @@ public class UsersController {
         return "redirect:/admin/users";
     }
 
-    @PatchMapping("/{id}")
-    public String update(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
+    @PatchMapping()
+    public String update(@ModelAttribute("updateUser") User user) {
         userService.updateUser(user);
         return "redirect:/admin/users";
     }
