@@ -26,7 +26,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         User user = (User) authentication.getPrincipal();
 
         if (admin) {
-            httpServletResponse.sendRedirect("/admin/users");
+            httpServletResponse.sendRedirect("/admin/");
         } else {
             httpServletResponse.sendRedirect("/user/" + user.getId());
         }

@@ -13,7 +13,7 @@ import springbootwebsecurity.sbwebsecurity.service.UserService;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin/users")
+@RequestMapping("/admin/")
 public class UsersController {
 
     private final UserDetailsServiceImp userDetailsServiceImp;
@@ -26,22 +26,17 @@ public class UsersController {
     }
 
     @GetMapping()
-    public String getAllUsers(@ModelAttribute("newUser") User user,
-                              @ModelAttribute("updateUser") User updateUser,
-                              @ModelAttribute("id") Long id,
+    public String getAllUsers(@ModelAttribute("user") User user,
                               Model model) {
-        List<Role> allRoles = userService.getRoles();
-
-        model.addAttribute("allRoles", allRoles);
-        model.addAttribute("user", userDetailsServiceImp.getUser());
+        model.addAttribute("admin", userDetailsServiceImp.getUser());
         model.addAttribute("ListUsers", userService.getAllUsers());
-
-        model.addAttribute("updateUser", userService.getUser(id));
-        return "admin/getAllUsers";
+        List<Role> allRoles = userService.getRoles();
+        model.addAttribute("allRoles", allRoles);
+        return "admin/index";
     }
 
     @GetMapping("/new")
-    public String newUser(@ModelAttribute("user") User user, Model model) {
+    public String add(@ModelAttribute("user") User user, Model model) {
         List<Role> allRoles = userService.getRoles();
         model.addAttribute("allRoles", allRoles);
         return "admin/new";
@@ -62,21 +57,21 @@ public class UsersController {
     }
 
 
-    @PostMapping()
-    public String create(@ModelAttribute("newUser") User user) {
+    @PostMapping("/users")
+    public String create(@ModelAttribute("user") User user) {
         userService.add(user);
-        return "redirect:/admin/users";
+        return "redirect:/admin/";
     }
 
-    @PatchMapping()
-    public String update(@ModelAttribute("updateUser") User user) {
+    @PostMapping("{id}")
+    public String update(@ModelAttribute("user") User user,@PathVariable("id") Long id) {
         userService.updateUser(user);
-        return "redirect:/admin/users";
+        return "redirect:/admin/";
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}/delete")
     public String delete(@PathVariable("id") Long id) {
         userService.deleteUser(id);
-        return "redirect:/admin/users";
+        return "redirect:/admin/";
     }
 }
