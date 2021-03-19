@@ -23,14 +23,6 @@ public class LoginController {
 		this.userService = userService;
 	}
 
-	@GetMapping(value = "/admin/hello")
-	public String helloAdmin(Model model) {
-		List<String> messages = new ArrayList<>();
-		messages.add("Administrator page");
-		model.addAttribute("messages", messages);
-		return "admin/hello";
-	}
-
 	@GetMapping(value = "/user/{id}")
 	public String helloUser(Model model, @PathVariable("id") Long id) {
 		User user = userService.getUser(userDetailsServiceImp.getUser().getId());

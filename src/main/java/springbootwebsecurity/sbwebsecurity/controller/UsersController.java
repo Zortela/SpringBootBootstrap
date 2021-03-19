@@ -35,28 +35,6 @@ public class UsersController {
         return "admin/index";
     }
 
-    @GetMapping("/new")
-    public String add(@ModelAttribute("user") User user, Model model) {
-        List<Role> allRoles = userService.getRoles();
-        model.addAttribute("allRoles", allRoles);
-        return "admin/new";
-    }
-
-    @GetMapping("/{id}")
-    public String show(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userService.getUser(id));
-        return "/admin/show";
-    }
-
-    @GetMapping("/{id}/edit")
-    public String edit(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("user", userService.getUser(id));
-        List<Role> allRoles = userService.getRoles();
-        model.addAttribute("allRoles", allRoles);
-        return "admin/edit";
-    }
-
-
     @PostMapping("/users")
     public String create(@ModelAttribute("user") User user) {
         userService.add(user);
