@@ -14,22 +14,28 @@ import java.util.List;
 @Controller
 public class LoginController {
 
-	private final UserDetailsServiceImp userDetailsServiceImp;
-	private final UserService userService;
+    private final UserDetailsServiceImp userDetailsServiceImp;
+    private final UserService userService;
 
-	@Autowired
-	public LoginController(UserDetailsServiceImp userDetailsServiceImp, UserService userService) {
-		this.userDetailsServiceImp = userDetailsServiceImp;
-		this.userService = userService;
-	}
+    @Autowired
+    public LoginController(UserDetailsServiceImp userDetailsServiceImp, UserService userService) {
+        this.userDetailsServiceImp = userDetailsServiceImp;
+        this.userService = userService;
+    }
 
-	@GetMapping(value = "/user/{id}")
-	public String helloUser(Model model, @PathVariable("id") Long id) {
-		User user = userService.getUser(userDetailsServiceImp.getUser().getId());
-		model.addAttribute("admin", userDetailsServiceImp.getUser());
-		model.addAttribute("user", user);
-		return "user/getUser";
-	}
+    @GetMapping(value = "/login")
+    public String loginPage(@ModelAttribute User user, Model model) {
+        model.addAttribute("user", user);
+        return "service/login";
+    }
+
+    @GetMapping(value = "/user/{id}")
+    public String helloUser(Model model, @PathVariable("id") Long id) {
+        User user = userService.getUser(userDetailsServiceImp.getUser().getId());
+        model.addAttribute("admin", userDetailsServiceImp.getUser());
+        model.addAttribute("user", user);
+        return "user/getUser";
+    }
 
 
 }
